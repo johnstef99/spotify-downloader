@@ -1,3 +1,8 @@
+# Changes from the original fork
+
+- Add pytube as requirement
+- Refactor the way you get lyrics from genius
+
 # Spotify-Downloader
 
 **There is a v3 of spotdl now being maintained by other folks on https://github.com/spotDL/spotify-downloader.**
@@ -41,6 +46,7 @@ Below is how your music library will look!
 spotify-downloader works with all major distributions and even on low-powered devices such as a Raspberry Pi.
 
 spotify-downloader can be installed via pip with:
+
 ```console
 $ pip3 install git+https://github.com/ritiek/spotify-downloader.git
 ```
