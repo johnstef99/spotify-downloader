@@ -254,7 +254,8 @@ class MetadataSearch:
         videos = self.providers["youtube"].search(query)
         if not videos:
             raise NoYouTubeVideoFoundError(
-                'YouTube returned no videos for the search query "{}".'.format(query)
+                'YouTube returned no videos for the search query "{}".'.format(
+                    query)
             )
         if self.yt_manual:
             video = _prompt_for_youtube_search_result(videos)
@@ -275,16 +276,21 @@ class MetadataSearch:
 
     def _best_on_youtube_search_for_type_spotify(self, url):
         spotify_metadata = self._on_spotify_for_type_spotify(url)
-        search_query = spotdl.metadata.format_string(self.yt_search_format, spotify_metadata)
+        search_query = spotdl.metadata.format_string(
+            self.yt_search_format, spotify_metadata)
         video = self._best_on_youtube_search_for_type_query(search_query)
         return video
 
     def _on_youtube_and_spotify_for_type_spotify(self, url):
-        logger.debug("Extracting YouTube and Spotify metadata for input Spotify URI.")
+        logger.debug(
+            "Extracting YouTube and Spotify metadata for input Spotify URI.")
         spotify_metadata = self._on_spotify_for_type_spotify(url)
-        search_query = spotdl.metadata.format_string(self.yt_search_format, spotify_metadata)
-        youtube_video = self._best_on_youtube_search_for_type_query(search_query)
-        youtube_metadata = self.providers["youtube"].from_url(youtube_video["url"])
+        search_query = spotdl.metadata.format_string(
+            self.yt_search_format, spotify_metadata)
+        youtube_video = self._best_on_youtube_search_for_type_query(
+            search_query)
+        youtube_metadata = self.providers["youtube"].from_url(
+            youtube_video["url"])
         metadata = spotdl.util.merge_copy(
             youtube_metadata,
             spotify_metadata
@@ -292,9 +298,11 @@ class MetadataSearch:
         return metadata
 
     def _on_youtube_and_spotify_for_type_youtube(self, url):
-        logger.debug("Extracting YouTube and Spotify metadata for input YouTube URL.")
+        logger.debug(
+            "Extracting YouTube and Spotify metadata for input YouTube URL.")
         youtube_metadata = self._on_youtube_for_type_youtube(url)
-        search_query = spotdl.metadata.format_string("{track-name}", youtube_metadata)
+        search_query = spotdl.metadata.format_string(
+            "{track-name}", youtube_metadata)
         spotify_metadata = self._on_spotify_for_type_query(search_query)
         metadata = spotdl.util.merge_copy(
             youtube_metadata,
@@ -303,7 +311,8 @@ class MetadataSearch:
         return metadata
 
     def _on_youtube_and_spotify_for_type_query(self, query):
-        logger.debug("Extracting YouTube and Spotify metadata for input track query.")
+        logger.debug(
+            "Extracting YouTube and Spotify metadata for input track query.")
         # Make use of threads here to search on both YouTube & Spotify
         # at the same time.
         spotify_metadata = spotdl.util.ThreadWithReturnValue(
@@ -321,7 +330,8 @@ class MetadataSearch:
     def _on_youtube_for_type_spotify(self, url):
         logger.debug("Extracting YouTube metadata for input Spotify URI.")
         youtube_video = self._best_on_youtube_search_for_type_spotify(url)
-        youtube_metadata = self.providers["youtube"].from_url(youtube_video["url"])
+        youtube_metadata = self.providers["youtube"].from_url(
+            youtube_video["url"])
         return youtube_metadata
 
     def _on_youtube_for_type_youtube(self, url):
@@ -332,13 +342,15 @@ class MetadataSearch:
     def _on_youtube_for_type_query(self, query):
         logger.debug("Extracting YouTube metadata for input track query.")
         youtube_video = self._best_on_youtube_search_for_type_query(query)
-        youtube_metadata = self.providers["youtube"].from_url(youtube_video["url"])
+        youtube_metadata = self.providers["youtube"].from_url(
+            youtube_video["url"])
         return youtube_metadata
 
     def _on_spotify_for_type_youtube(self, url):
         logger.debug("Extracting Spotify metadata for input YouTube URL.")
         youtube_metadata = self.providers["youtube"].from_url(url)
-        search_query = spotdl.metadata.format_string("{track-name}", youtube_metadata)
+        search_query = spotdl.metadata.format_string(
+            "{track-name}", youtube_metadata)
         spotify_metadata = self.providers["spotify"].from_query(search_query)
         return spotify_metadata
 
@@ -355,4 +367,3 @@ class MetadataSearch:
             logger.warn(e.args[0])
             spotify_metadata = {}
         return spotify_metadata
-
