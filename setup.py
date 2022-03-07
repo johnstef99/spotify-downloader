@@ -34,6 +34,7 @@ setup(
         "pathlib >= 1.0.1",
         "youtube_dl >= 2017.9.26",
         "pytube3 >= 9.5.5",
+        "pytube >= 12.0.0",
         "spotipy >= 2.12.0",
         "mutagen >= 1.41.1",
         "beautifulsoup4 >= 4.6.3",
